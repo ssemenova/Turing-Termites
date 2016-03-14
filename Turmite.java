@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.Arrays;
 
 public class Turmite implements DisplayableAutomaton{
   private AutomatonImage image;
@@ -50,7 +51,6 @@ public class Turmite implements DisplayableAutomaton{
       image.colorCell(col, row, color);
       moveForward();
     }
-
     image.markComplete();
   }
 
@@ -59,15 +59,35 @@ public class Turmite implements DisplayableAutomaton{
   * which will turn the ant, color the current cell, and change the state
   */
   private void applyRule() {
-    if (state == 0 && colorArray[row][col] == 0) {
-      turn(0); //turn right
-      colorArray[row][col] = 1; //change current color
-      state = 0; //change state
-    } else if (state == 0 && colorArray[row][col] == 1) {
-      turn(1); //turn left
-      colorArray[row][col] = 0; //change current color
-      state = 0; //change state
-    }
+    int readState, readColor;
+    int newState, newColor, newTurn;
+    int count = 0;
+
+    //look through all rules until we find one that matches our current predicament
+    //  color, state, new color, new state, turning direction
+    do {
+      readColor = ruleArray[count][0];
+      readState = ruleArray[count][1];
+      newColor = ruleArray[count][2];
+      newState = ruleArray[count][3];
+      newTurn = ruleArray[count][4];
+      count++;
+    } while (readState!=state || readColor!=colorArray[row][col]);
+
+    turn(newTurn);
+    colorArray[row][col] = newColor;
+    state = newState;
+
+
+    // if (state == 0 && colorArray[row][col] == 0) {
+    //   turn(0); //turn right
+    //   colorArray[row][col] = 1; //change current color
+    //   state = 0; //change state
+    // } else if (state == 0 && colorArray[row][col] == 1) {
+    //   turn(1); //turn left
+    //   colorArray[row][col] = 0; //change current color
+    //   state = 0; //change state
+    // }
   }
 
   private void moveForward() {
@@ -84,6 +104,7 @@ public class Turmite implements DisplayableAutomaton{
     else if (direction == 3)
       row = row - 1;
 
+    //wrap around if goes off the screen
     if (row >= gridSize)
       row = 0;
     if (col >= gridSize)
@@ -109,6 +130,7 @@ public class Turmite implements DisplayableAutomaton{
   /*
   * Converts a number to a color object
   */
+  //TODO: make more colors (up to 8)
   private Color convertNumToColor(int num) {
     if (num == 0)
       return Color.WHITE;
