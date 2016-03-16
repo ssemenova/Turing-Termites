@@ -27,7 +27,7 @@ public class Turmite implements DisplayableAutomaton{
 
     //defaults
     state = 0;
-    direction = 2; //0 - Left, 1 - Up, 2 - Right, 3 - Down
+    direction = 1; //0 - Left, 1 - Up, 2 - Right, 3 - Down
     row = gridSize / 2; //starts off in middle
     col = gridSize / 2; //starts off in middle
   }
@@ -72,24 +72,20 @@ public class Turmite implements DisplayableAutomaton{
       newState = ruleArray[count][3];
       newTurn = ruleArray[count][4];
       count++;
+      // System.out.println("COLOR=" + readColor + " " + colorArray[row][col]);
+      // System.out.println("STATE=" + readState + " " + state);
+      // System.out.println("COUNT=" + count);
+      // System.out.println();
     } while (readState!=state || readColor!=colorArray[row][col]);
 
     turn(newTurn);
     colorArray[row][col] = newColor;
     state = newState;
-
-
-    // if (state == 0 && colorArray[row][col] == 0) {
-    //   turn(0); //turn right
-    //   colorArray[row][col] = 1; //change current color
-    //   state = 0; //change state
-    // } else if (state == 0 && colorArray[row][col] == 1) {
-    //   turn(1); //turn left
-    //   colorArray[row][col] = 0; //change current color
-    //   state = 0; //change state
-    // }
   }
 
+  /*
+  * Moves the termite forward, wrapping around if it goes off the board
+  */
   private void moveForward() {
     //facing left
     if (direction == 0)
@@ -123,21 +119,37 @@ public class Turmite implements DisplayableAutomaton{
     if (turnDirection == 0)
       direction = (direction + 1) % 4;
     //turn left
-    else
+    else if (turnDirection == 1)
       direction = (direction + 3) % 4;
+    //if turn direction = 2, turmite keeps going straight
   }
 
   /*
   * Converts a number to a color object
   */
-  //TODO: make more colors (up to 8)
   private Color convertNumToColor(int num) {
     if (num == 0)
       return Color.WHITE;
     else if (num == 1)
       return Color.BLACK;
+    else if (num == 2)
+      return Color.BLUE;
+    else if (num == 3)
+      return Color.RED;
+    else if (num == 4)
+      return Color.GREEN;
+    else if (num == 5)
+      return Color.MAGENTA;
+    else if (num == 6)
+      return Color.YELLOW;
+    else if (num == 7)
+      return Color.ORANGE;
+    else if (num == 8)
+      return Color.PINK;
+    else if (num == 9)
+      return Color.CYAN;
     else
-      return Color.BLACK;
+      return Color.GRAY;
   }
 
 	/**
