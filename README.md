@@ -123,7 +123,7 @@ Bonus extra images that I thought were cool:
 
 ## Part 3 - Generating a spiral
 
-The spiral works by continously moving forward and coloring blocks if the current block is empty and the state is 0. A block is never colored back to white (or turned empty after it has been filled). The ant traces the outer edge of the current structure until the point that it hits another black block, which will happen if it is time for the next leg of the spiral to grow longer. Turns are decided on the edges of the square spiral - usually they are left (0) on a corner, but when 
+The spiral works by continously moving forward and coloring blocks if the current block is empty and the state is 0. A block is never colored back to white (or turned empty after it has been filled). The ant traces the outer edge of the current structure until the point that it hits another black block, which will happen if it is time for the next leg of the spiral to grow longer. Turns are decided on the edges of the square spiral - usually they are left (0) on a corner, but when it steps on a block that has already been colored in with a state of 1 (so, colored in by itself and previously passed by itself only once), it will turn right off that block and then left again ... so the spiral continues around, the next leg a pixel longer.
 
 ![spiral](/generatedimages/spiral.png)
 ```
